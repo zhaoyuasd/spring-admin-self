@@ -1,0 +1,57 @@
+
+spring:
+  boot:
+    admin:
+      ui:
+        cache:
+          no-cache: true
+        #template-location: classpath:/templates
+        #template-location: file://D:/idea/spring-boot-admin/spring-boot-admin-server-ui/src/main/frontend
+        #resource-locations: file://D:/idea/spring-boot-admin/spring-boot-admin-server-ui/src/main/frontend
+  application:
+    name: zookeeper-example
+  cloud:
+    config:
+      enabled: true
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        root: /zk-service
+        metadata:
+         # management.context-path: /foo
+         # health.path: /ping
+          chName: 测试监控中心
+          user.name: user
+          user.password: password
+  profiles:
+    active:
+      - secure
+server:
+  port: 8082
+
+management:
+  #server:
+    #servlet:
+      #context-path: /foo
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      #path-mapping:
+        #health: /ping
+  #endpoint:
+    #health:
+     # show-details: ALWAYS
+
+---
+spring:
+  profiles: insecure
+
+---
+spring:
+  profiles: secure
+  security:
+    user:
+      name: "user"
+      password: "password"
+
